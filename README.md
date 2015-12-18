@@ -1,5 +1,7 @@
 # wheelemu
+
 GNU GPL License - See LICENSE for details
+
 Copyright (c) Grady O'Connell, 2015
 
 wheelemu adds grab-and-drag panning behavior in every mouse-wheel-enabled application.
