@@ -14,6 +14,7 @@ scrolling = False
 mx = 0
 my = 0
 threshold = 8
+KEY = 173
 
 class MoveEvent(PyMouseEvent):
     def __init__(self):
@@ -46,7 +47,7 @@ class HoldEvent(PyKeyboardEvent):
         PyKeyboardEvent.__init__(self)
     def tap(self, key, ch, press):
         global scrolling
-        if key == 173:
+        if key == KEY:
             if scrolling != press:
                 scrolling = press
 
