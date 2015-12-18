@@ -28,10 +28,10 @@ class MoveEvent(PyMouseEvent):
             # simulate scroll
             while True:
                 if x < mx - threshold:
-                    m.scroll(None, -1 if natural else 1)
+                    m.scroll(None, 1 if natural else -1)
                     mx = x - threshold
                 elif x > mx + threshold:
-                    m.scroll(None, 1 if natural else -1)
+                    m.scroll(None, -1 if natural else 1)
                     mx = x + threshold
                 elif y < my - threshold:
                     m.scroll(-1 if natural else 1)
