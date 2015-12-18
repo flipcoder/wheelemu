@@ -6,15 +6,17 @@ from pykeyboard import PyKeyboard
 from pykeyboard import PyKeyboardEvent
 import time
 
-m = PyMouse()
-k = PyKeyboard()
-
-scrolling = False
-
-mx = 0
-my = 0
+# Customize values here:
 threshold = 8
 KEY = 173
+natural = False
+# -----
+
+m = PyMouse()
+k = PyKeyboard()
+scrolling = False
+mx = 0
+my = 0
 
 class MoveEvent(PyMouseEvent):
     def __init__(self):
@@ -26,16 +28,16 @@ class MoveEvent(PyMouseEvent):
             # simulate scroll
             while True:
                 if x < mx - threshold:
-                    m.click(x, y, 6)
+                    m.click(x, y, 7 if natural else 6)
                     mx = x - threshold
                 elif x > mx + threshold:
-                    m.click(x, y, 7)
+                    m.click(x, y, 6 if natural else 7)
                     mx = x + threshold
                 elif y < my - threshold:
-                    m.click(x, y, 4)
+                    m.click(x, y, 5 if natural else 4)
                     my = y - threshold
                 elif y > my + threshold:
-                    m.click(x, y, 5)
+                    m.click(x, y, 4 if natural else 5)
                     my = y + threshold
                 else:
                     break
