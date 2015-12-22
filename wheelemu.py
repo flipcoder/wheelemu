@@ -26,21 +26,22 @@ class MoveEvent(PyMouseEvent):
         global m, mx, my
         if scrolling:
             # simulate scroll
-            while True:
-                if x < mx - threshold:
-                    m.scroll(None, 1 if natural else -1)
-                    mx = x - threshold
-                elif x > mx + threshold:
-                    m.scroll(None, -1 if natural else 1)
-                    mx = x + threshold
-                elif y < my - threshold:
-                    m.scroll(-1 if natural else 1)
-                    my = y - threshold
-                elif y > my + threshold:
-                    m.scroll(1 if natural else -1)
-                    my = y + threshold
-                else:
-                    break
+            if x <= mx - threshold:
+                mag = (mx-x) // threshold
+                m.scroll(None, mag if natural else -mag)
+                mx -= mag * threshold
+            elif x >= mx + threshold:
+                mag = (x-mx) // threshold
+                m.scroll(None, -mag if natural else mag)
+                mx += mag * threshold
+            if y <= my - threshold:
+                mag = (my-y) // threshold
+                m.scroll(-mag if natural else mag)
+                my -= mag * threshold
+            elif y >= my + threshold:
+                mag = (y-my) // threshold
+                m.scroll(mag if natural else -mag)
+                my += mag * threshold
         else:
             mx, my = x, y
 
@@ -51,6 +52,7 @@ class HoldEvent(PyKeyboardEvent):
         global scrolling
         if key == KEY:
             if scrolling != press:
+                print key, press
                 scrolling = press
 
 hold_ev = HoldEvent()
@@ -61,7 +63,7 @@ move_ev.start()
 try:
     while True:
         time.sleep(1)
-except:
+except KeyboardInterrupt, kbe:
     move_ev.stop()
     hold_ev.stop()
 
