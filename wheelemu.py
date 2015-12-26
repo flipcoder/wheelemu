@@ -10,6 +10,7 @@ import time
 threshold = 8
 KEY = 173
 natural = False
+toggle = False
 # -----
 
 m = PyMouse()
@@ -50,8 +51,13 @@ class HoldEvent(PyKeyboardEvent):
         PyKeyboardEvent.__init__(self)
     def tap(self, key, ch, press):
         global scrolling
+        global toggle
         if key == KEY:
-            if scrolling != press:
+            if toggle:
+                if press:
+                    print key, scrolling
+                    scrolling = not scrolling
+            elif scrolling != press:
                 print key, press
                 scrolling = press
 
